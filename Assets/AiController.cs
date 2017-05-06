@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Net;
 using UnityEngine;
 using System.Net.Sockets;
+using System.Text;
 
 public class AiController : MonoBehaviour {
     class EyeBrow {
@@ -57,7 +59,7 @@ public class AiController : MonoBehaviour {
 
         eyeBrow.eyeBrowMiddleUp = expression.transform.Find("eyebrowmiddleup").gameObject;
         eyeBrow.eyeBrowUp = expression.transform.Find("eyebrowup").gameObject;
-        eyeBrow.frown = expression.transform.Find("frwon").gameObject;
+        eyeBrow.frown = expression.transform.Find("frown").gameObject;
         eyeBrow.angry = expression.transform.Find("angry").gameObject;
 
         eye.smileEye = expression.transform.Find("smileeye").gameObject;
@@ -88,23 +90,33 @@ public class AiController : MonoBehaviour {
         other.smallMouth = expression.transform.Find("smallmouth").gameObject;
         other.smallPupil = expression.transform.Find("smallpupil").gameObject;
 
-        neck = transform.Find("Model/center/upper body/neck").gameObject;
+        neck = transform.Find("Model/body/center/group/waist/upper/upper2/head").gameObject;
 	}
 	
 	void Update () {
         System.Net.Sockets.TcpClient clientSocket = new System.Net.Sockets.TcpClient();
         clientSocket.Connect("127.0.0.1", 9999);
         NetworkStream serverStream = clientSocket.GetStream();
-        byte[] inStream = new byte[10000];
-        serverStream.Read(inStream, 0, (int) clientSocket.ReceiveBufferSize);
+        byte[] inStream = new byte[1000000];
+        serverStream.Read(inStream, 0, (int)clientSocket.ReceiveBufferSize);
         string returnData = System.Text.Encoding.ASCII.GetString(inStream);
 
         Debug.Log(returnData);
 
-        timestamp++;
+	    string[] numberStrings = returnData.Split();
+	    float[] numbers = new float[numberStrings.Length - 1];
+	    for (int i = 0; i < numbers.Length - 1; ++i)
+	    {
+	        numbers[i] = (float) double.Parse(numberStrings[i]);
+	    }
+
+        //timestamp++;
         //roll = 10 * Mathf.Sin(timestamp / 10f);
         //yaw = 8 * Mathf.Sin(timestamp / 8f);
         //pitch = 6 * Mathf.Sin(timestamp / 13f);
+	    yaw = numbers[0];
+	    pitch = numbers[1];
+	    roll = numbers[2];
 
         eyeBrow.eyeBrowMiddleUp.transform.localPosition = new Vector3(0, 0, eyeBrowData.eyeBrowMiddleUp);
         eyeBrow.eyeBrowUp.transform.localPosition = new Vector3(0, 0, eyeBrowData.eyeBrowUp);
@@ -139,6 +151,9 @@ public class AiController : MonoBehaviour {
         other.smallMouth.transform.localPosition = new Vector3(0, 0, otherdata.smallMouth);
         other.smallPupil.transform.localPosition = new Vector3(0, 0, otherdata.smallPupil);
 
-        neck.transform.rotation = Quaternion.Euler(roll, yaw, pitch);
+        neck.transform.rotation = Quaternion.Euler(-pitch, -yaw, -roll);
+	    eyeData.winkLeft = 1 - numbers[3];
+	    eyeData.winkRight = 1 - numbers[4];
+	    lipData.a = numbers[5];
 	}
 }
