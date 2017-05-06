@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class AiController : MonoBehaviour {
+public class AiControllerGame : MonoBehaviour {
     class EyeBrow {
         public GameObject eyeBrowMiddleUp, eyeBrowUp, frown, angry;
     }
@@ -128,7 +128,7 @@ public class AiController : MonoBehaviour {
         lip_.mouthDown.transform.localPosition = new Vector3(0, 0, lipData.mouthDown);
         lip_.surprise.transform.localPosition = new Vector3(0, 0, lipData.surprise);
         lip_.cry.transform.localPosition = new Vector3(0, 0, lipData.cry);
-        
+
         other.smallMouth.transform.localPosition = new Vector3(0, 0, otherData.smallMouth);
         other.smallPupil.transform.localPosition = new Vector3(0, 0, otherData.smallPupil);
 
