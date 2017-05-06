@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Net.NetworkInformation;
 using System.Text;
 using UnityEngine;
 
@@ -13,18 +12,9 @@ public class ServerInteraction {
     public static float[] fetchData(bool mockup) {
         if (mockup)
             return fetchMockupData();
-        /*
-        System.Net.NetworkInformation.Ping pingSender = new System.Net.NetworkInformation.Ping();
-        PingOptions options = new PingOptions();
 
-        options.DontFragment = true;
-        string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        byte[] buffer = Encoding.ASCII.GetBytes (data);
-        int timeout = 10;
-        PingReply reply = pingSender.Send("127.0.0.1:9999", timeout, buffer, options);
-        if (reply.Status != IPStatus.Success)
-            return fetchMockupData();
-        */
+
+
         try {
             System.Net.Sockets.TcpClient clientSocket = new System.Net.Sockets.TcpClient();
             clientSocket.Connect(address, port);

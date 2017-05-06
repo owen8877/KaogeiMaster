@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: backgroundMaterial
+  m_Name: scrolling_top
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION
+  m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -43,14 +43,14 @@ Material:
         name: _EmissionMap
       second:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 1, y: -0.06}
+        m_Offset: {x: 0, y: 0.005}
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: da72d8fbc1c0bac4b813cfa6a3b00be4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 9416a6beac072a64f9bcf0e92b32589f, type: 3}
+        m_Scale: {x: 1, y: -0.06}
+        m_Offset: {x: 0, y: 0.005}
     - first:
         name: _MetallicGlossMap
       second:
@@ -71,6 +71,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: PixelSnap
+      second: 0
+    - first:
         name: _BumpScale
       second: 1
     - first:
@@ -87,13 +90,13 @@ Material:
       second: 1
     - first:
         name: _Glossiness
-      second: 0.634
+      second: 0
     - first:
         name: _GlossyReflections
       second: 1
     - first:
         name: _Metallic
-      second: 0.23
+      second: 0
     - first:
         name: _Mode
       second: 0
@@ -105,7 +108,7 @@ Material:
       second: 0.02
     - first:
         name: _SmoothnessTextureChannel
-      second: 0
+      second: 1
     - first:
         name: _SpecularHighlights
       second: 1

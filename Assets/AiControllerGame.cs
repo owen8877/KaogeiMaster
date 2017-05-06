@@ -47,13 +47,13 @@ public class AiControllerGame : MonoBehaviour {
     GameObject chuyin;
     GameObject neck;
 
-    EyeBrowData eyeBrowData = new EyeBrowData();
-    EyeData eyeData = new EyeData();
-    LipData lipData = new LipData();
-    OtherData otherData = new OtherData();
-    NeckData neckData = new NeckData();
+    public EyeBrowData eyeBrowData = new EyeBrowData();
+    public EyeData eyeData = new EyeData();
+    public LipData lipData = new LipData();
+    public OtherData otherData = new OtherData();
+    public NeckData neckData = new NeckData();
 
-    bool mockup = true;
+    bool mockup = false;
 
     int timestamp = 0;
 
@@ -96,9 +96,47 @@ public class AiControllerGame : MonoBehaviour {
         neck = transform.Find("Model/body/center/group/waist/upper/upper2/head").gameObject;
 	}
 	
+    const float alpha = 0.4f, beta = 0.4f;
+    Vector3[] velocity = new Vector3[30];
+
 	void Update () {
         updateParameter(ServerInteraction.fetchData(mockup));
 
+
+        eyeBrow.eyeBrowMiddleUp.transform.localPosition = Vector3.SmoothDamp(eyeBrow.eyeBrowMiddleUp.transform.localPosition, new Vector3(0, 0, eyeBrowData.eyeBrowMiddleUp), ref velocity[0],  alpha);
+        eyeBrow.eyeBrowUp.transform.localPosition  = Vector3.SmoothDamp(eyeBrow.eyeBrowUp.transform.localPosition, new Vector3(0, 0, eyeBrowData.eyeBrowUp), ref velocity[1],  alpha);
+        eyeBrow.frown.transform.localPosition  = Vector3.SmoothDamp(eyeBrow.frown.transform.localPosition, new Vector3(0, 0, eyeBrowData.frown), ref velocity[2],  alpha);
+        eyeBrow.angry.transform.localPosition  = Vector3.SmoothDamp(eyeBrow.angry.transform.localPosition, new Vector3(0, 0, eyeBrowData.angry), ref velocity[3],  alpha);
+
+        eye.smileEye.transform.localPosition  = Vector3.SmoothDamp(eye.smileEye.transform.localPosition, new Vector3(0, 0, eyeData.smileEye), ref velocity[4],  alpha);
+        eye.shutEye.transform.localPosition  = Vector3.SmoothDamp(eye.shutEye.transform.localPosition, new Vector3(0, 0, eyeData.shutEye), ref velocity[5],  alpha);
+        eye.winkLeft.transform.localPosition  = Vector3.SmoothDamp(eye.winkLeft.transform.localPosition, new Vector3(0, 0, eyeData.winkLeft), ref velocity[6],  alpha);
+        eye.winkRight.transform.localPosition  = Vector3.SmoothDamp(eye.winkRight.transform.localPosition, new Vector3(0, 0, eyeData.winkRight), ref velocity[7],  alpha);
+        eye.wink2Left.transform.localPosition  = Vector3.SmoothDamp(eye.wink2Left.transform.localPosition, new Vector3(0, 0, eyeData.wink2Left), ref velocity[8],  alpha);
+        eye.wink2Right.transform.localPosition  = Vector3.SmoothDamp(eye.wink2Right.transform.localPosition, new Vector3(0, 0, eyeData.wink2Right), ref velocity[9],  alpha);
+        eye.hikuli.transform.localPosition  = Vector3.SmoothDamp(eye.hikuli.transform.localPosition, new Vector3(0, 0, eyeData.hikuli), ref velocity[10],  alpha);
+        eye.sorrow.transform.localPosition  = Vector3.SmoothDamp(eye.sorrow.transform.localPosition, new Vector3(0, 0, eyeData.sorrow), ref velocity[11],  alpha);
+        eye.despise.transform.localPosition  = Vector3.SmoothDamp(eye.despise.transform.localPosition, new Vector3(0, 0, eyeData.despise), ref velocity[12],  alpha);
+        eye.doujiyan.transform.localPosition  = Vector3.SmoothDamp(eye.doujiyan.transform.localPosition, new Vector3(0, 0, eyeData.doujiyan), ref velocity[13],  alpha);
+
+        lip_.a.transform.localPosition  = Vector3.SmoothDamp(lip_.a.transform.localPosition, new Vector3(0, 0, lipData.a), ref velocity[14],  alpha);
+        lip_.i.transform.localPosition  = Vector3.SmoothDamp(lip_.i.transform.localPosition, new Vector3(0, 0, lipData.i), ref velocity[15],  alpha);
+        lip_.u.transform.localPosition  = Vector3.SmoothDamp(lip_.u.transform.localPosition, new Vector3(0, 0, lipData.u), ref velocity[16],  alpha);
+        lip_.e.transform.localPosition  = Vector3.SmoothDamp(lip_.e.transform.localPosition, new Vector3(0, 0, lipData.e), ref velocity[17],  alpha);
+        lip_.o.transform.localPosition  = Vector3.SmoothDamp(lip_.o.transform.localPosition, new Vector3(0, 0, lipData.o), ref velocity[18],  alpha);
+        lip_.oo.transform.localPosition  = Vector3.SmoothDamp(lip_.oo.transform.localPosition, new Vector3(0, 0, lipData.oo), ref velocity[19],  alpha);
+        lip_.ii.transform.localPosition  = Vector3.SmoothDamp(lip_.ii.transform.localPosition, new Vector3(0, 0, lipData.ii), ref velocity[20],  alpha);
+        lip_.roundMouth.transform.localPosition  = Vector3.SmoothDamp(lip_.roundMouth.transform.localPosition, new Vector3(0, 0, lipData.roundMouth), ref velocity[21],  alpha);
+        lip_.triangleMouth.transform.localPosition  = Vector3.SmoothDamp(lip_.triangleMouth.transform.localPosition, new Vector3(0, 0, lipData.triangleMouth), ref velocity[22],  alpha);
+        lip_.smike.transform.localPosition  = Vector3.SmoothDamp(lip_.smike.transform.localPosition, new Vector3(0, 0, lipData.smike), ref velocity[23],  alpha);
+        lip_.mouthDown.transform.localPosition  = Vector3.SmoothDamp(lip_.mouthDown.transform.localPosition, new Vector3(0, 0, lipData.mouthDown), ref velocity[24],  alpha);
+        lip_.surprise.transform.localPosition  = Vector3.SmoothDamp(lip_.surprise.transform.localPosition, new Vector3(0, 0, lipData.surprise), ref velocity[25],  alpha);
+        lip_.cry.transform.localPosition  = Vector3.SmoothDamp(lip_.cry.transform.localPosition, new Vector3(0, 0, lipData.cry), ref velocity[26],  alpha);
+
+        other.smallMouth.transform.localPosition  = Vector3.SmoothDamp(other.smallMouth.transform.localPosition, new Vector3(0, 0, otherData.smallMouth), ref velocity[27],  alpha);
+        other.smallPupil.transform.localPosition  = Vector3.SmoothDamp(other.smallPupil.transform.localPosition, new Vector3(0, 0, otherData.smallPupil), ref velocity[28],  alpha);
+
+        /*
         eyeBrow.eyeBrowMiddleUp.transform.localPosition = new Vector3(0, 0, eyeBrowData.eyeBrowMiddleUp);
         eyeBrow.eyeBrowUp.transform.localPosition = new Vector3(0, 0, eyeBrowData.eyeBrowUp);
         eyeBrow.frown.transform.localPosition = new Vector3(0, 0, eyeBrowData.frown);
@@ -131,8 +169,8 @@ public class AiControllerGame : MonoBehaviour {
 
         other.smallMouth.transform.localPosition = new Vector3(0, 0, otherData.smallMouth);
         other.smallPupil.transform.localPosition = new Vector3(0, 0, otherData.smallPupil);
-
-        neck.transform.rotation = Quaternion.Euler(neckData.pitch, neckData.yaw, neckData.roll);
+        */
+        neck.transform.rotation = Quaternion.Slerp(neck.transform.rotation, Quaternion.Euler(neckData.pitch, neckData.yaw, neckData.roll), beta);
 	}
 
     void updateParameter(float[] result) {
